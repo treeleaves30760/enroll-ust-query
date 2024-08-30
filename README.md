@@ -1,4 +1,4 @@
-# NYCU Enrollment Status Scraper
+# UST Enrollment Status Scraper
 
 This project is a web scraper designed to query the enrollment status of students in the Taiwan University System. It automates the process of checking admission results across multiple departments for specified student exam numbers.
 
