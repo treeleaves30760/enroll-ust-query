@@ -114,7 +114,8 @@ if __name__ == "__main__":
         print(f"\nStatus for exam number {exam_number}:")
         for status in statuses:
             print(f"Department: {status['department']}")
-            print(f"Status: {status['status']}")
+            print(
+                f"Status: {status['status'] if status['status'] else '電話通知錄取中'}")
             print(f"People ahead: {status['people_ahead'] - 1}")
             print("---")
     else:
