@@ -66,13 +66,14 @@ def get_all_enrollment_statuses(exam_number):
                 if not select_option_by_js("ddlExamList", dept['value']):
                     print(f"Failed to select department: {dept['text']}")
                     continue
+                print("Department selected")
                 time.sleep(1)
 
             try:
                 table = wait_for_element(By.ID, "dgUserList")
                 rows = table.find_elements(By.TAG_NAME, "tr")
                 found = False
-                people_ahead = 0
+                people_ahead = []
                 for row in rows:
                     cells = row.find_elements(By.TAG_NAME, "td")
                     if len(cells) > 0:
@@ -80,13 +81,17 @@ def get_all_enrollment_statuses(exam_number):
                             status = cells[3].text.strip()
                             results.append({
                                 "department": dept['text'],
-                                "status": status,
+                                "status": status if status else '電話通知錄取中',
                                 "people_ahead": people_ahead
                             })
                             found = True
                             break
-                        elif cells[3].text.strip() in ["備取", ""]:
-                            people_ahead += 1
+                        elif cells[3].text.strip() in ["備取", ""] and cells[0].text.strip() != "考生編號":
+                            people_ahead.append({
+                                "exam_number": cells[0].text.strip(),
+                                "name": cells[1].text.strip(),
+                                "status": cells[3].text.strip() if cells[3].text.strip() else '電話通知錄取中'
+                            })
                 if found:
                     print(
                         f"Found student in department {index + 1}/{len(department_options)}")
@@ -116,7 +121,12 @@ if __name__ == "__main__":
             print(f"Department: {status['department']}")
             print(
                 f"Status: {status['status'] if status['status'] else '電話通知錄取中'}")
-            print(f"People ahead: {status['people_ahead'] - 1}")
+            print(f"People ahead: {len(status['people_ahead'])}")
+            if len(status['people_ahead']):
+                print("List of people ahead:")
+                for person in status['people_ahead']:
+                    print(
+                        f"  - Exam Number: {person['exam_number']}, Name: {person['name']}, Status: {person['status']}")
             print("---")
     else:
         print(f"\nNo information found for exam number {exam_number}")
