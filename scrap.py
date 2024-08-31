@@ -67,7 +67,7 @@ def get_all_enrollment_statuses(exam_number):
                     print(f"Failed to select department: {dept['text']}")
                     continue
                 print("Department selected")
-                time.sleep(3)
+                time.sleep(1)
 
             try:
                 table = wait_for_element(By.ID, "dgUserList")
