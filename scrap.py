@@ -66,23 +66,27 @@ def get_all_enrollment_statuses(exam_number):
                 if not select_option_by_js("ddlExamList", dept['value']):
                     print(f"Failed to select department: {dept['text']}")
                     continue
-                print("Department selected")
                 time.sleep(1)
 
             try:
                 table = wait_for_element(By.ID, "dgUserList")
                 rows = table.find_elements(By.TAG_NAME, "tr")
                 found = False
+                people_ahead = 0
                 for row in rows:
                     cells = row.find_elements(By.TAG_NAME, "td")
-                    if len(cells) > 0 and cells[0].text.strip() == str(exam_number):
-                        status = cells[3].text.strip()
-                        results.append({
-                            "department": dept['text'],
-                            "status": status
-                        })
-                        found = True
-                        break
+                    if len(cells) > 0:
+                        if cells[0].text.strip() == str(exam_number):
+                            status = cells[3].text.strip()
+                            results.append({
+                                "department": dept['text'],
+                                "status": status,
+                                "people_ahead": people_ahead
+                            })
+                            found = True
+                            break
+                        elif cells[3].text.strip() in ["備取", ""]:
+                            people_ahead += 1
                 if found:
                     print(
                         f"Found student in department {index + 1}/{len(department_options)}")
@@ -111,6 +115,7 @@ if __name__ == "__main__":
         for status in statuses:
             print(f"Department: {status['department']}")
             print(f"Status: {status['status']}")
+            print(f"People ahead: {status['people_ahead'] - 1}")
             print("---")
     else:
         print(f"\nNo information found for exam number {exam_number}")
