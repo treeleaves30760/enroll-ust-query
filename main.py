@@ -7,30 +7,26 @@ Status:
 - empty: Is waiting for student's response
 """
 
-from scrap import get_all_enrollment_statuses
-
-Query_List = [3001540]  # 放入你想要查詢的學號
+from scrapy_whole import EnrollmentQuerySystem
 
 
 def main():
-    for exam_number in Query_List:
-        statuses = get_all_enrollment_statuses(exam_number)
+    query_system = EnrollmentQuerySystem()
 
-        if statuses:
-            print(f"\nStatus for exam number {exam_number}:")
-            for status in statuses:
-                print(f"Department: {status['department']}")
-                print(
-                    f"Status: {status['status'] if status['status'] else '電話通知錄取中'}")
-                print(f"People ahead: {len(status['people_ahead'])}")
-                if len(status['people_ahead']):
-                    print("List of people ahead:")
-                    for person in status['people_ahead']:
-                        print(
-                            f"  - Exam Number: {person['exam_number']}, Name: {person['name']}, Status: {person['status']}")
-                print("---")
-        else:
-            print(f"\nNo information found for exam number {exam_number}")
+    while True:
+        try:
+            exam_number = input(
+                "Enter an exam number to query (or 'exit' to quit): ")
+            if exam_number.lower() == 'exit':
+                break
+            query_system.display_status(exam_number)
+        except ValueError:
+            print("Invalid input. Please enter a valid exam number.")
+        except KeyboardInterrupt:
+            print("\nExiting the program.")
+            break
+
+    print("Thank you for using the Enrollment Query System.\nThis is made by @treeleaves30760.")
 
 
 if __name__ == "__main__":
