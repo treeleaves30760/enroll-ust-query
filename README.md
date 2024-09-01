@@ -36,24 +36,18 @@ Before you begin, ensure you have met the following requirements:
 
 ## Usage
 
-1. Open `main.py` and modify the `Query_List` to include the exam numbers you want to check:
-
-   ```python
-   Query_List = [3001540, 3001541, 3001542]  # Add the exam numbers you want to query
-   ```
-
-2. Run the script:
+1. Run the script:
 
    ```bash
    python main.py
    ```
 
-3. The script will process each exam number and display the results, showing the status for each department where the student is found.
+2. The script will process each exam number and display the results, showing the status for each department where the student is found.
 
 ## File Structure
 
 - `main.py`: The main script to run the queries
-- `scrap.py`: Contains the web scraping logic and functions
+- `scrapy_whole.py`: Contains the web scraping logic and functions
 - `README.md`: This file, containing project information and instructions
 
 ## Status Meanings
@@ -65,7 +59,7 @@ Before you begin, ensure you have met the following requirements:
 
 ## Notes
 
-- The script uses Firefox in normal mode by default. To run in headless mode, uncomment the relevant line in `scrap.py`.
+- The script uses Firefox in normal mode by default. To run in headless mode, uncomment the relevant line in `scrapy_whole.py`.
 - Ensure you have a stable internet connection when running the script.
 - The script may take some time to complete, depending on the number of departments and exam numbers being queried.
 
