@@ -22,8 +22,8 @@ Before you begin, ensure you have met the following requirements:
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/your-username/nycu-enrollment-scraper.git
-   cd nycu-enrollment-scraper
+   git clone https://github.com/treeleaves30760/enroll-ust-query.git
+   cd enroll-ust-query
    ```
 
 2. Install the required Python packages:
